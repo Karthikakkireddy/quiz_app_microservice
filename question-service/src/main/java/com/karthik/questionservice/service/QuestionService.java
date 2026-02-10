@@ -2,6 +2,7 @@ package com.karthik.questionservice.service;
 
 
 import com.karthik.questionservice.domain.Questions;
+import com.karthik.questionservice.dto.QuestionResponseDTO;
 import com.karthik.questionservice.repository.QuestionRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,29 @@ public class QuestionService
     {
         List<Integer> questionsList = questionRepo.findRandomQuestionsByCategory(category, numQ); // Calling question service
         return questionsList;
+    }
+
+    public List<QuestionResponseDTO> getQuestionsFromIds(List<Integer> questionIds)
+    {
+        List<Questions> questionsList = questionRepo.findAllById(questionIds);
+
+        List<QuestionResponseDTO>  questionResponseDTOList = questionsList.stream()
+                .map(this::mapToQuestionResponse)
+                .toList();
+
+        return questionResponseDTOList;
+    }
+
+
+    private QuestionResponseDTO mapToQuestionResponse(Questions questions)
+    {
+        QuestionResponseDTO questionResponseDTO = new QuestionResponseDTO();
+        questionResponseDTO.setQuestionTitle(questions.getQuestionTitle());
+        questionResponseDTO.setOption1(questions.getOption1());
+        questionResponseDTO.setOption2(questions.getOption2());
+        questionResponseDTO.setOption3(questions.getOption3());
+        questionResponseDTO.setOption4(questions.getOption4());
+
+        return questionResponseDTO;
     }
 }

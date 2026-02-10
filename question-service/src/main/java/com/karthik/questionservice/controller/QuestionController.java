@@ -3,6 +3,7 @@ package com.karthik.questionservice.controller;
 
 
 import com.karthik.questionservice.domain.Questions;
+import com.karthik.questionservice.dto.QuestionResponseDTO;
 import com.karthik.questionservice.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,13 @@ public class QuestionController
     }
 
     // get/{questionId}
+
+    @PostMapping("/getQuestions")
+    public ResponseEntity<List<QuestionResponseDTO>> getQuestionsFromId(@RequestBody List<Integer> questionIds)
+    {
+        List<QuestionResponseDTO> questionResponseDTOList = questionService.getQuestionsFromIds(questionIds);
+        return ResponseEntity.ok(questionResponseDTOList);
+    }
 
     // getScore
 
