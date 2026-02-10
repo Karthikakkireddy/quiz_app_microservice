@@ -3,6 +3,7 @@ package com.karthik.questionservice.controller;
 
 
 import com.karthik.questionservice.domain.Questions;
+import com.karthik.questionservice.dto.AnswersDTO;
 import com.karthik.questionservice.dto.QuestionResponseDTO;
 import com.karthik.questionservice.service.QuestionService;
 import lombok.RequiredArgsConstructor;
@@ -56,5 +57,11 @@ public class QuestionController
     }
 
     // getScore
+    @PostMapping("/getScore")
+    public ResponseEntity<Integer> getScore(@RequestBody List<AnswersDTO> answersDTOs)
+    {
+        Integer score = questionService.getScore(answersDTOs);
+        return ResponseEntity.ok(score);
+    }
 
 }

@@ -2,12 +2,15 @@ package com.karthik.questionservice.service;
 
 
 import com.karthik.questionservice.domain.Questions;
+import com.karthik.questionservice.dto.AnswersDTO;
 import com.karthik.questionservice.dto.QuestionResponseDTO;
 import com.karthik.questionservice.repository.QuestionRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -48,6 +51,37 @@ public class QuestionService
         return questionResponseDTOList;
     }
 
+    public Integer getScore(List<AnswersDTO> answersDTOs)
+    {
+
+        List<Integer> ids = answersDTOs.stream()
+                .map(AnswersDTO::getQuestionId)
+                .toList();
+
+
+
+        List<Questions> questionsList = questionRepo.findAllById(ids);
+
+
+        Integer answer =0;
+        Map<Integer, String > correctAnswer = new HashMap<>();
+
+        for(Questions q : questionsList)
+        {
+            correctAnswer.put(q.getId(), q.getRightAnswer());
+        }
+
+        for(AnswersDTO answers : answersDTOs)
+        {
+            String correct = correctAnswer.get(answers.getQuestionId());
+
+            if(correct != null && correct.equals(answers.getChoosenAnswer()))
+            {
+                answer++;
+            }
+        }
+        return answer;
+    }
 
     private QuestionResponseDTO mapToQuestionResponse(Questions questions)
     {
@@ -60,4 +94,6 @@ public class QuestionService
 
         return questionResponseDTO;
     }
+
+
 }
