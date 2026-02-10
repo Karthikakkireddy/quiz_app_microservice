@@ -29,4 +29,10 @@ public class QuestionService
     {
         return questionRepo.save(question);
     }
+
+    public List<Integer> genereateQuestionsForQuiz(String category, Integer numQ)
+    {
+        List<Integer> questionsList = questionRepo.findRandomQuestionsByCategory(category, numQ); // Calling question service
+        return questionsList;
+    }
 }
