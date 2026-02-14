@@ -7,6 +7,7 @@ import com.karthik.quizservice.dto.QuestionResponseDTO;
 import com.karthik.quizservice.feign.QuizInterface;
 import com.karthik.quizservice.repository.QuizRepo;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -38,19 +39,22 @@ public class QuizService
     public List<QuestionResponseDTO> getQuestions(int id)
     {
         Quiz quiz = quizRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("ID NOT FOUND " + id));
-//        List<Questions> questionsList = quiz.getQuestions();
-//
-//        List<QuestionResponseDTO> questionResponseDTOS = questionsList.stream()
-//                .map(this::mapToQuestionResponse)
-//                .toList();
+        List<Integer> questionsList = quiz.getQuestionIds();
 
-        return null;
+        List<QuestionResponseDTO>  questionResponseDTOS = quizInterface.getQuestionsFromId(questionsList).getBody();
+
+
+
+        return questionResponseDTOS;
 
     }
     public Integer calculateScore(int id, List<AnswersDTO> answersDTO)
     {
-        Quiz quiz = quizRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("ID NOT FOUND " + id));
-//        List<Questions> questionsList = quiz.getQuestions();
+
+//        Quiz quiz = quizRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("ID NOT FOUND " + id));
+//        List<Integer> questionsListIds = quiz.getQuestionIds();
+//        List<QuestionResponseDTO> questionResponseDTOS= quizInterface.getQuestionsFromId(questionsListIds).getBody();
+//
 //        Integer answer =0;
 //        Map<Integer, String > correctAnswer = new HashMap<>();
 //
@@ -58,7 +62,7 @@ public class QuizService
 //        {
 //            correctAnswer.put(q.getId(), q.getRightAnswer());
 //        }
-
+//
 //        for(AnswersDTO answers : answersDTO)
 //        {
 //            String correct = correctAnswer.get(answers.getQuestionId());
@@ -69,8 +73,8 @@ public class QuizService
 //            }
 //        }
 //        return answer;
-
-        return null;
+//
+//        return null;
 
     }
 
