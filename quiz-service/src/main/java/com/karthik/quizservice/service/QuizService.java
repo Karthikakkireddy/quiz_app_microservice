@@ -4,6 +4,7 @@ package com.karthik.quizservice.service;
 import com.karthik.quizservice.domain.Quiz;
 import com.karthik.quizservice.dto.AnswersDTO;
 import com.karthik.quizservice.dto.QuestionResponseDTO;
+import com.karthik.quizservice.feign.QuizInterface;
 import com.karthik.quizservice.repository.QuizRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,20 @@ public class QuizService
 {
     private final QuizRepo quizRepo;
 //    private final QuestionRepo questionRepo;
-
+    private final QuizInterface quizInterface;
     public Quiz createQuiz(String category, int numQ, String title)
     {
 //        List<Questions> questionsList = questionRepo.findRandomQuestionsByCategory(category, numQ); // Calling question service
-//        Quiz quiz = new Quiz();
-//        quiz.setTitle(title);
-//        quiz.setQuestions(questionsList);
 
-//        return  quizRepo.save(quiz);
-        return null;
+        List<Integer> questionsIdList = quizInterface.getQuestionsForQuiz(category, numQ).getBody();
+
+        Quiz quiz = new Quiz();
+        quiz.setTitle(title);
+
+        quiz.setQuestionIds(questionsIdList);
+
+        return  quizRepo.save(quiz);
+
     }
 
     public List<QuestionResponseDTO> getQuestions(int id)
