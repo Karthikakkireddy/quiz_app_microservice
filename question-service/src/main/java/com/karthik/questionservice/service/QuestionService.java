@@ -86,6 +86,7 @@ public class QuestionService
     private QuestionResponseDTO mapToQuestionResponse(Questions questions)
     {
         QuestionResponseDTO questionResponseDTO = new QuestionResponseDTO();
+        questionResponseDTO.setId(questions.getId());
         questionResponseDTO.setQuestionTitle(questions.getQuestionTitle());
         questionResponseDTO.setOption1(questions.getOption1());
         questionResponseDTO.setOption2(questions.getOption2());

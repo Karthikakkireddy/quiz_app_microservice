@@ -50,31 +50,9 @@ public class QuizService
     }
     public Integer calculateScore(int id, List<AnswersDTO> answersDTO)
     {
+        Integer result = quizInterface.getScore(answersDTO).getBody();
 
-//        Quiz quiz = quizRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("ID NOT FOUND " + id));
-//        List<Integer> questionsListIds = quiz.getQuestionIds();
-//        List<QuestionResponseDTO> questionResponseDTOS= quizInterface.getQuestionsFromId(questionsListIds).getBody();
-//
-//        Integer answer =0;
-//        Map<Integer, String > correctAnswer = new HashMap<>();
-//
-//        for(Questions q : questionsList)
-//        {
-//            correctAnswer.put(q.getId(), q.getRightAnswer());
-//        }
-//
-//        for(AnswersDTO answers : answersDTO)
-//        {
-//            String correct = correctAnswer.get(answers.getQuestionId());
-//
-//            if(correct != null && correct.equals(answers.getChoosenAnswer()))
-//            {
-//                answer++;
-//            }
-//        }
-//        return answer;
-//
-//        return null;
+        return result;
 
     }
 

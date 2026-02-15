@@ -6,6 +6,7 @@ import lombok.Data;
 public class QuestionResponseDTO
 {
 
+    private Integer id;
     private String questionTitle;
     private String option1;
     private String option2;
